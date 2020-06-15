@@ -33,7 +33,39 @@
 }
 
  // 方法二  二分查找 (抽屉原理)
+ var findDuplicate = function(nums) {
+    let n = nums.length
+    let left = 1, right = n - 1
+    let res
+    while(left <= right){
+        mid = (left + right) >> 1
+        let cnt = 0
+        for(let i=0;i<n;i++){
+            if(nums[i]<=mid){ cnt ++ }
+        }
+        if(cnt <= mid){
+            left = mid + 1
+        }else{
+            right = mid - 1
+            res = mid
+        }
+    }
+    return res
+};
 
  // 方法三  快慢指针
+ var findDuplicate = function(nums) {
+    let s = 0 ,q = 0
+    do{
+        s = nums[nums[s]]
+        q = nums[q]
+    }while(s !== q)
+    s = 0
+    while( s !== q){
+        s = nums[s]
+        q = nums[q]
+    }
+    return s
+  };
 
  // 方法四  二进制
