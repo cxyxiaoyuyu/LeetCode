@@ -1,12 +1,22 @@
 // 递归逆序数组
 function reverse(arr){
     let n = arr.length
-    if(arr.length <= 1){
+    if(n <= 1){
         return arr
     }else{
         return [arr[n-1]].concat(reverse(arr.slice(0,n-1)))
     }
 }
+
+function reverse(arr){
+    let n = arr.length
+    if(n <= 1){
+        return arr
+    }else{
+        return [arr.pop()].concat(reverse(arr))
+    }
+}
+
 
 // 循环逆序数组
 // function reverse(arr){
@@ -16,5 +26,7 @@ function reverse(arr){
 //     }
 //     return res
 // }
+
+
 
 console.log(reverse([1,2,3,4]))
