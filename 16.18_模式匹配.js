@@ -25,7 +25,41 @@ function patternMatching(pattern,value){
     if(pattern === ''){
         return value === ''
     }
+    let reg = ''
+    let a = ''
+    let b = ''
+    let flag = 1
+    for(let char of pattern){
+        if(char === 'a'){
+            if(a){
+                reg += a
+            }else{
+                reg += '(\\w*)'
+                a = `\\${flag}`
+                flag ++ 
+            }
+        }else{
+             if(b){
+                reg += b
+            }else{
+                reg += '(\\w*)'
+                b = `\\${flag}`
+                flag ++ 
+            }
+        }
+    }
+    let re = new RegExp('^'+reg+'$')
+    let match = re.exec(value)
+    return !!match && match[1] !== match[2]   // 第一个分组 !== 第二个分组
 }
 
+// 将正则进行到底
+var patternMatching = function(pattern, value) {
+    if(pattern === '') return value === ''
+    let reg = pattern.replace('a','(?<a>\\w*)').replace('b','(?<b>\\w*)')
+    reg = reg.replace(/(?<!\<)a/g,'\\k<a>').replace(/(?<!\<)b/g,'\\k<b>')
+    let match = new RegExp('^'+reg+'$').exec(value)
+    return !!match && match[1] !== match[2]
+}
 
 // 枚举
