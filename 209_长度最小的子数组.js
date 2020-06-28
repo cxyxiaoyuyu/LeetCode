@@ -21,3 +21,25 @@ var minSubArrayLen = function(s, nums) {
     }
     return res === 10**9 ? 0 : res
 }
+
+// 2. 前缀和 加 二分查找
+
+
+// 3. 滑动窗口
+const minSubArrayLen = (s, nums) => {
+    let minLen = Infinity;
+    let i = 0;
+    let j = 0;
+    let sum = 0;
+    while (j < nums.length) {   // 主旋律是扩张，找可行解
+      sum += nums[j];
+      while (sum >= s) {        // 间歇性收缩，优化可行解
+        minLen = Math.min(minLen, j - i + 1);
+        sum -= nums[i];
+        i++;
+      }
+      j++;
+    }
+    return minLen === Infinity ? 0 : minLen; // 从未找到可行解，返回0
+  };
+  
