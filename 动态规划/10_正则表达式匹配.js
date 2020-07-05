@@ -10,6 +10,7 @@
 // 输出: false
 // 解释: "a" 无法匹配 "aa" 整个字符串。
 
+// 动态规划
 const isMatch = (s, p) => {
     if (s == null || p == null) return false
     let len1 = s.length, len2 = p.length
