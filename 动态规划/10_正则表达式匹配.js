@@ -37,3 +37,8 @@ const isMatch = (s, p) => {
     }
     return dp[len1][len2] // len1长度的s串 是否匹配 len2长度的p串
   }
+
+// 直接用正则
+var isMatch = function(s, p) {
+  return new RegExp('^'+p+'$').test(s)
+}
