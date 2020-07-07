@@ -29,3 +29,24 @@ var hasPathSum = function(root, sum) {
 }
   
 // 广度优先搜索
+var hasPathSum = function(root , sum){
+    if(!root) return false
+    let queue_node = [root]
+    let queue_val = [root.val]
+    while(queue_node.length){
+        now_node = queue_node.shift()
+        now_val = queue_val.shift()
+        if(now_node.left === null && now_node.right === null){
+            if(now_val === sum) return true
+        }
+        if(now_node.left){
+            queue_node.push(now_node.left)
+            queue_val.push(now_val + now_node.left.val)
+        }
+        if(now_node.right){
+            queue_node.push(now_node.right)
+            queue_val.push(now_val + now_node.right.val)
+        }
+    }
+    return false
+}
