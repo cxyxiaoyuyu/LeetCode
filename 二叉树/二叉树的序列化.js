@@ -98,3 +98,24 @@ const traverSeRootMiddle2 = (bTree) => {
 traverSeRootMiddle2(binaryTree)
 console.log('\n 不利用递归中序遍历')
 console.log(resultMiddle2)
+
+
+// BFS 遍历二叉树
+var serialize = (root) => {
+  let queue = [root]
+  let res = []
+
+  while(queue.length){
+    let node = queue.shift()
+    if(node){
+      res.push(node.value)
+      queue.push(node.left)
+      queue.push(node.right)
+    }else{
+      res.push('null')
+    }
+  }
+  return res
+}
+
+console.log(serialize(binaryTree))
