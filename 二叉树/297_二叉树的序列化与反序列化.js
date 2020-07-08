@@ -23,13 +23,15 @@ var buildTree = (list) => {
   return node
 }
 
-// 将二叉树先序遍历 返回字符串
+// 将二叉树先序遍历 返回字符串  递归
 var serialize = (root) => {
   if (root == null) return 'X,' // 遇到null节点
   const leftSerialized = serialize(root.left)   //左子树的序列化字符串
   const rightSerialized = serialize(root.right) //右子树的序列化字符串
   return root.val + ',' + leftSerialized + rightSerialized // 根|左|右
 }
+
+// 不利用递归先序遍历 自己维护一个栈
 
 
 
