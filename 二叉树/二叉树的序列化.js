@@ -119,3 +119,6 @@ var serialize = (root) => {
 }
 
 console.log(serialize(binaryTree))
+
+
+// 中根序遍历顺序存储的二叉树
