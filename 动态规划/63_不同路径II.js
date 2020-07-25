@@ -25,16 +25,16 @@ var uniquePathsWithObstacles = function(obstacleGrid) {
     let n = obstacleGrid[0].length
     if(obstacleGrid[0][0] === 1) return 0
     let dp = Array.from(Array(m+1),()=>Array(n+1).fill(0))
-    for(let i=0;i<m;i++){
-        for(let j=0;j<n;j++){
-            if(i===0 && j===0){
+    for(let i=1;i<=m;i++){
+        for(let j=1;j<=n;j++){
+            if(i===1 && j===1){
                 dp[1][1] = 1
                 continue
             }
-            if(obstacleGrid[i][j] === 1){
-                dp[i+1][j+1] = 0
+            if(obstacleGrid[i-1][j-1] === 1){
+                dp[i][j] = 0
             }else{
-                dp[i+1][j+1] = dp[i+1][j] + dp[i][j+1]
+                dp[i][j] = dp[i][j-1] + dp[i-1][j]
             }
         }
     }
