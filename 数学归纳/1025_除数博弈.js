@@ -32,7 +32,17 @@ function divisorGame(N) {
 }
  
 // 2 正常递推
-
-
+// 遍历找到N的因子x  如果 N-x 是必败(false)的 那么N是必胜(true)的  反之N 必败
+function divisorGame(N){
+    let res = [true,false,true]
+    for(let i=3;i<=N;i++){
+        for(let j=1;j<i;j++){
+            if( i%j===0 && !res[i-j]){
+                res[i] = true
+            }
+        }
+    }
+    return !!res[N] 
+}
 
 
