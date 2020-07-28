@@ -6,7 +6,8 @@
 // 输出: 6
 // 解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
 
-// 1 动态规划
+// 1 动态规划  
+// 秒啊 考虑以这个元素结尾的子数组 最大和
 var maxSubArray = function(nums) {
     let pre = 0, maxAns = nums[0];
     nums.forEach((x) => {

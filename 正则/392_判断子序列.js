@@ -18,3 +18,4 @@ var isSubsequence = function(s, t) {
     let res = t.match(reg)
     return !!res
 }
+
