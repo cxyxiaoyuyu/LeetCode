@@ -15,7 +15,25 @@
 // 1 正则
 var isSubsequence = function(s, t) {
     let reg = new RegExp(s.split('').join('.*'))
+    // let reg = new RegExp(Array.from(s).join('.*'))
     let res = t.match(reg)
     return !!res
 }
 
+// 2 动态规划  自己写的 嘿嘿
+var isSubsequence = function(s, t) {
+    if(s.length === 0) return true
+    let sn = s.length
+    let tn = t.length
+    let dp = Array.from(Array(sn+1),()=>Array(tn+1).fill(false))
+    dp[0][0] = true
+    dp[0].fill(true)
+    for(let i=1;i<sn+1;i++){
+        for(let j=i;j<tn+1;j++){
+            if(dp[i][j-1] || (dp[i-1][j-1] && s[i-1]===t[j-1])){
+                dp[i][j] = true
+            }
+        }
+    }
+    return dp[sn][tn]
+}
