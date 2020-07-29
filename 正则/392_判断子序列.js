@@ -39,3 +39,17 @@ var isSubsequence = function(s, t) {
 }
 
 // 3 双指针
+var isSubsequence = function(s, t){
+    if(!s.length) return true
+    let sp = 0    // 指向短字符串的指针
+    let tp = 0    // 指向长字符串的指针
+    while(sp < s.length && tp < t.length){
+        if(s[sp] === t[tp]){
+            sp++
+            tp++
+        }else{
+            tp++
+        }
+    }
+    return sp > s.length - 1
+}
