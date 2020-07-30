@@ -25,11 +25,11 @@ var mySqrt = function(x) {
 }
 
 // 2 二分查找  有点小坑 值得深思 哈哈哈
+// 取右中位数可能会好理解点
 var mySqrt = function(x){
     let l = 0, r = x
     while(l<=r){
         let mid = l + ((r-l) >> 1)
-        console.log(l,mid,r)
         if(mid**2 === x){
             return mid
         }else if(mid**2 > x){
