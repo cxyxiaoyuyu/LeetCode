@@ -10,14 +10,14 @@
 // 输出: 36
 // 解释: 10 = 3 + 3 + 4, 3 × 3 × 4 = 36。
 
-// 动态规划 左右两边都可以拆  其实左右只要拆分一个就好了
+
+// 1 动态规划 左右两边都可以拆  其实左右只要拆分一个就好了
 
 // 当 i≥2 时，假设对正整数 ii 拆分出的第一个正整数是 jj（1 <= j <i），则有以下两种方案：
 // 将 i拆分成 j和 i-j 的和，且 i-j 不再拆分成多个正整数，此时的乘积是 j×(i−j)
 // 将 i拆分成 j和 i-j 的和，且 i-j 继续拆分成多个正整数，此时的乘积是 j×dp[i−j]
 
 // 因为i-j 肯定是大于j 的 所以考虑拆分i-j
-
 var integerBreak = function(n) {
     let dp = new Array(n+1).fill(0)
     for(let i=2;i<=n;i++){
@@ -28,4 +28,27 @@ var integerBreak = function(n) {
         }
     }
     return dp[n]
+}
+
+// 2 递归 会超时
+var integerBreak = function(n){
+    let res = 0
+    for(let i=1;i<=n-i;i++){
+        res = Math.max(res,i*(n-i),i*integerBreak(n-i))
+    }
+    return res
+}
+
+// 2 记忆化递归
+var integerBreak = function(n) {
+    let memo = new Array(n+1)
+    const dfs = (n)=>{
+        if(memo[n]) return memo[n]
+        let res = 0
+        for(let i=1;i<=n-i;i++){
+            res = Math.max(res,i*(n-i),i*dfs(n-i))
+        }
+        return memo[n] = res
+    }
+    return dfs(n)
 }
