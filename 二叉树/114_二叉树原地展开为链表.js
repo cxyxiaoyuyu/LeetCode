@@ -43,3 +43,23 @@ var flatten = function(root) {
     }    
     return root
 };
+
+// 2 寻找前驱节点
+// 顺序向右边遍历 如果有左节点 就找到左节点的最右边节点 指向当前节点的右边节点 
+// 再将当前节点的右边指向左节点 左节点变为空
+var flatten = function(root) {
+    let p = root
+    while(p !== null){
+        if(p.left){
+            // 找到左边节点的最右边节点
+            leftRight = p.left
+            while(leftRight.right !== null){
+                leftRight = leftRight.right
+            }
+            leftRight.right = p.right
+            p.right = p.left
+            p.left = null
+        }
+        p = p.right
+    }
+};
