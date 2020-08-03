@@ -19,7 +19,31 @@ function quick_sort(arr){
     }
 }
 
-// 原地排序
-function quick_sort_in_place(arr,start=0,end=arr.length){
 
+
+// 原地排序
+function quick_sort_in_place(arr){
+    var quick_sort = (arr,start,end)=>{
+        if(end - start <=1) return 
+        let pivotIndex = handlePivot(arr,start,end)
+        quick_sort(arr,start,pivotIndex)
+        quick_sort(arr,pivotIndex+1,end)
+    }
+    quick_sort(arr,0,arr.length)
+}
+
+// 原地将小的放左边 大的放右边  找到基准值的下标
+function handlePivot(arr,start,end){
+    if(end - start <= 1) return end - start - 1
+    let k = start + 1
+    while(end - k > 0){    
+        if(arr[k] > arr[start]){
+            swap(arr,k,end-1)   // 当最后一次arr[k] > arr[start]时 会自己跟自己交换
+            end --
+        }else{
+            k++
+        }        
+    }
+    swap(arr,start,k-1)
+    return k - 1
 }
