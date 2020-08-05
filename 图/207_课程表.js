@@ -13,34 +13,34 @@
 // 解释: 总共有 2 门课程。学习课程 1 之前，你需要先完成​课程 0；并且学习课程 0 之前，你还应先完成课程 1。这是不可能的。
 
 // 1. BFS 广度优先搜索 入度为0的先学习放入队列
-const canFinish = (numCourses, prerequisites) => {
-    const inDegree = new Array(numCourses).fill(0); // 入度数组
-    const map = {};                                 // 邻接表
-    for (let i = 0; i < prerequisites.length; i++) {
-      inDegree[prerequisites[i][0]]++;              // 求课的初始入度值
-      if (map[prerequisites[i][1]]) {               // 当前课已经存在于邻接表
-        map[prerequisites[i][1]].push(prerequisites[i][0]); // 添加依赖它的后续课
-      } else {                                      // 当前课不存在于邻接表
-        map[prerequisites[i][1]] = [prerequisites[i][0]];
-      }
+canFinish = (numCourses, prerequisites) => {
+    let inDgree = new Array(numCourses).fill(0)  // 每个课程对应的入度个数
+    let map = {}                       // 每个课程的出度课程 后续课程
+    let count = 0
+    for(let i=0;i<prerequisites.length;i++){
+        inDgree[prerequisites[i][1]]++
+        map[prerequisites[i][0]] = map[prerequisites[i][0]] || []
+        map[prerequisites[i][0]].push(prerequisites[i][1])
     }
-    const queue = [];
-    for (let i = 0; i < inDegree.length; i++) { // 所有入度为0的课入列
-      if (inDegree[i] == 0) queue.push(i);
-    }
-    let count = 0;
-    while (queue.length) {
-      const selected = queue.shift();           // 当前选的课，出列
-      count++;                                  // 选课数+1
-      const toEnQueue = map[selected];          // 获取这门课对应的后续课
-      if (toEnQueue && toEnQueue.length) {      // 确实有后续课
-        for (let i = 0; i < toEnQueue.length; i++) {
-          inDegree[toEnQueue[i]]--;             // 依赖它的后续课的入度-1
-          if (inDegree[toEnQueue[i]] == 0) {    // 如果因此减为0，入列
-            queue.push(toEnQueue[i]);
-          }
+    
+    let queue = []
+    for(let i=0;i<inDgree.length;i++){
+        if(inDgree[i] === 0) {     // 将入度为0的课程放入队列 优先学习
+            queue.push(i)
         }
-      }
     }
-    return count == numCourses; // 选了的课等于总课数，true，否则false
-  };
+    
+    while(queue.length){
+        let course = queue.shift()
+        count ++ 
+        if(map[course]){      // 如果存在后续课程 那么每个后续课程的入度减一
+            for(let i=0;i<map[course].length;i++){
+                inDgree[map[course][i]]--
+                if(inDgree[map[course][i]] === 0){    // 如果入度减一后等于0表示可以入队列 开始学习
+                    queue.push(map[course][i])
+                }
+            }
+        }
+    }
+    return count === numCourses
+}
