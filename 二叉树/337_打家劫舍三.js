@@ -54,9 +54,7 @@ var rob = function(root) {
 // 优化以后  只是优化代码行数
 var rob = function(root) {
     if(root === null) return 0
-    // if(root.left === null && root.right === null) return root.val
     let childMax = 0, grandMax = root.val
-
     if(root.left){
         childMax = rob(root.left)
         grandMax += rob(root.left.left) + rob(root.left.right)
@@ -68,8 +66,45 @@ var rob = function(root) {
     return Math.max(childMax, grandMax)
 };
 
-// 记忆化递归
+const rob = (root) => {               // 打劫root为根节点的子树的最大收益
+    if (root == null) return 0;
+    let robIncludeRoot = root.val; 
+    if (root.left) {
+      robIncludeRoot += rob(root.left.left) + rob(root.left.right);
+    }
+    if (root.right) {
+      robIncludeRoot += rob(root.right.left) + rob(root.right.right);
+    }
+    const robExcludeRoot = rob(root.left) + rob(root.right); 
+    return Math.max(robIncludeRoot, robExcludeRoot); // 二者取其大
+};
 
+// 记忆化递归
+// 刚才哪里做了重复计算？
+// 我们计算了 root 的四个孙子子树，又计算了 root 的左右子树，而后者会把 root 的孙子子树重复计算一遍。
+// 我们把计算过的结果存到 map。下次遇到相同的子问题时直接拿过来用，就不用做重复的递归。
+const rob = (root) => {                // 厉害了 时间减少了十倍       
+    let memo = new Map()
+    const helper = (root)=>{
+        if (root == null) return 0;
+        if(memo.has(root)) return memo.get(root)
+        
+        let robIncludeRoot = root.val; 
+
+        if (root.left) {
+          robIncludeRoot += helper(root.left.left) + helper(root.left.right);
+        }
+        if (root.right) {
+          robIncludeRoot += helper(root.right.left) + helper(root.right.right);
+        }
+        const robExcludeRoot = helper(root.left) + helper(root.right); 
+
+        let res = Math.max(robIncludeRoot, robExcludeRoot)
+        memo.set(root,res)
+        return res // 二者取其大
+    }
+    return helper(root)
+}; 
 
 
 // 2 官方题解 动态规划
