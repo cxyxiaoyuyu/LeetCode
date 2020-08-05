@@ -51,7 +51,7 @@ var rob = function(root) {
     }
 };
 
-// 优化以后  
+// 优化以后  只是优化代码行数
 var rob = function(root) {
     if(root === null) return 0
     // if(root.left === null && root.right === null) return root.val
@@ -68,4 +68,22 @@ var rob = function(root) {
     return Math.max(childMax, grandMax)
 };
 
+// 记忆化递归
+
+
+
 // 2 官方题解 动态规划
+var rob = function(root){
+    const dfs = (node)=>{
+        if(node === null){
+            return [0,0]
+        }
+        let l = dfs(node.left)
+        let r = dfs(node.right)
+        let selected = node.val + l[1] + r[1]
+        let notSelected = Math.max(l[0],l[1]) + Math.max(r[0],r[1])
+        return [selected,notSelected]
+    }
+    let rootStatus = dfs(root)
+    return Math.max(rootStatus[0],rootStatus[1])
+}
