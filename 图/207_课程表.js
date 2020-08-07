@@ -14,8 +14,10 @@
 
 // 1. BFS 广度优先搜索 入度为0的先学习放入队列
 canFinish = (numCourses, prerequisites) => {
-    let inDgree = new Array(numCourses).fill(0)  // 每个课程对应的入度个数
-    let map = {}                       // 每个课程的出度课程 后续课程
+    // 每个课程对应的入度个数
+    let inDgree = new Array(numCourses).fill(0)  
+    // 每个课程的出度课程 后续课程
+    let map = {}                     
     let count = 0
     for(let i=0;i<prerequisites.length;i++){
         inDgree[prerequisites[i][1]]++
@@ -25,7 +27,8 @@ canFinish = (numCourses, prerequisites) => {
     
     let queue = []
     for(let i=0;i<inDgree.length;i++){
-        if(inDgree[i] === 0) {     // 将入度为0的课程放入队列 优先学习
+        // 将入度为0的课程放入队列 优先学习
+        if(inDgree[i] === 0) {     
             queue.push(i)
         }
     }
@@ -33,10 +36,11 @@ canFinish = (numCourses, prerequisites) => {
     while(queue.length){
         let course = queue.shift()
         count ++ 
-        if(map[course]){      // 如果存在后续课程 那么每个后续课程的入度减一
+        if(map[course]){    // 如果存在后续课程 那么每个后续课程的入度减一
             for(let i=0;i<map[course].length;i++){
                 inDgree[map[course][i]]--
-                if(inDgree[map[course][i]] === 0){    // 如果入度减一后等于0表示可以入队列 开始学习
+                // 如果入度减一后等于0表示可以入队列 开始学习
+                if(inDgree[map[course][i]] === 0){    
                     queue.push(map[course][i])
                 }
             }
