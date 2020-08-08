@@ -25,16 +25,14 @@
 // 它的左、右子树也分别为二叉排序树
 
 // 所以对二叉搜索树进行中序遍历的话 得到的一定是一个递增数列
-// 如果交换了里两个节点的位置 那必然有两个地方不满足 arr[i+1] > arr[i] 
+// 如果交换了里两个节点的位置 那必然有一个或两个地方 不满足 arr[i+1] > arr[i] 
 
 // 所以我们需要先找到这两个数 然后再交换这两个数
-
 var recoverTree = (root) => {
     let nums = []
     inorder(root,nums)    // 对该树进行中序遍历
     let [x,y] = findSwapNums(nums)
-    console.log(nums)
-    console.log(x,y)
+    recover(root,2,x,y)
 }
 var inorder = (root,nums)=>{
     if(root === null){
@@ -45,20 +43,32 @@ var inorder = (root,nums)=>{
     inorder(root.right,nums)
 }
 var findSwapNums = (nums) => {
-    let count = 0
     let x,y
     for(let i=0;i<nums.length;i++){
         if(nums[i+1] < nums[i]){
-            if(count === 0){
-               x = nums[i]
-               count++
-            }else if(count === 1){
+            if(x !== undefined){
                 y = nums[i+1]
                 break
+            }else{
+                x = nums[i]
+                y = nums[i+1]
             }
         }
     }
     return [x,y]
+}
+
+const recover = (r, count, x, y) => {
+    if (r !== null) {
+        if (r.val === x || r.val === y) {
+            r.val = r.val === x ? y : x;
+            if (--count === 0) {
+                return;
+            }
+        }
+        recover(r.left, count, x, y);
+        recover(r.right, count, x, y);
+    }
 }
 
 
