@@ -71,4 +71,19 @@ const recover = (r, count, x, y) => {
     }
 }
 
+// 如果recover 函数这样写 是不是好理解点
+const recover2 = (r, count, x, y) => {
+    if (r !== null) {
+        if(r.val === x){
+            r.val = y
+            if(--count === 0) return
+        }else if(r.val === y){
+            r.val = x
+            if(--count === 0) return
+        }
+        recover(r.left, count, x, y);
+        recover(r.right, count, x, y);
+    }
+}
+
 
