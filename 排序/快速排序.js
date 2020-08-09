@@ -47,3 +47,24 @@ function handlePivot(arr,start,end){
     swap(arr,start,k-1)
     return k - 1
 }
+
+// 随机化快排
+function handlePivot(arr,start,end){
+    if(end - start <= 1) return end - start - 1
+
+    // 生成[start,end)之间的随机数 并与第一个数交换位置
+    let random = Math.random()*(end - start) + start
+    swap(arr[random],arr[0])
+    
+    let k = start + 1
+    while(end - k > 0){    
+        if(arr[k] > arr[start]){
+            swap(arr,k,end-1)   // 当最后一次arr[k] > arr[start]时 会自己跟自己交换
+            end --
+        }else{
+            k++
+        }        
+    }
+    swap(arr,start,k-1)
+    return k - 1
+}

@@ -130,5 +130,45 @@ var inorder = (root,nums)=>{    // 只是修改中序遍历函数
 }
 
 // 3 mirros 中序遍历  空间复杂度 O(1)
+var recoverTree = function(root) {
+    let x = null, y = null, pred = null, predecessor = null;
 
+    while (root !== null) {
+      if (root.left !== null) {
+        predecessor = root.left;  // predecessor 节点就是当前 root 节点向左走一步，然后一直向右走至无法走为止
+        while (predecessor.right !== null && predecessor.right !== root)
+          predecessor = predecessor.right;
+        if (predecessor.right === null) {
+          predecessor.right = root; // 让 predecessor 的右指针指向 root，继续遍历左子树
+          root = root.left;
+        }else {  // 说明左子树已经访问完了，我们需要断开链接
+          if (pred !== null && root.val < pred.val) {
+            y = root;
+            if (x === null) {
+                x = pred;
+            }
+          }
+          pred = root;
+          predecessor.right = null;
+          root = root.right;
+        }
+      }else { // 如果没有左孩子，则直接访问右孩子
+        if (pred !== null && root.val < pred.val) {
+            y = root;
+            if (x === null) {
+                x = pred;
+            }
+        }
+        pred = root;
 
+        root = root.right;
+      }
+    }
+    swap(x, y);
+}
+
+const swap = (x, y) => {
+    const temp = x.val;
+    x.val = y.val;
+    y.val = temp;
+}
