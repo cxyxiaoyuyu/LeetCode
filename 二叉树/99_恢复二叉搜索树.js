@@ -113,8 +113,22 @@ const recoverTree = (root) => {
 }
 
 
-// 2 隐式中序遍历  用迭代的方法中序遍历二叉树
+// 2 隐式中序遍历  用迭代的方法中序遍历二叉树  
+var inorder = (root,nums)=>{    // 只是修改中序遍历函数
+    let stack = []
+    let cur = root
+    while(cur || stack.length){
+        if(cur){
+            stack.push(cur)
+            cur = cur.left
+        }else{
+            cur = stack.pop()
+            nums.push(cur.val)
+            cur = cur.right
+        }
+    }
+}
 
+// 3 mirros 中序遍历  空间复杂度 O(1)
 
-// 3 mirros 中序遍历
 
