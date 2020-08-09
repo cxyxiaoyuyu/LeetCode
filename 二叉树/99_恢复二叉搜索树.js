@@ -28,6 +28,8 @@
 // 如果交换了里两个节点的位置 那必然有一个或两个地方 不满足 arr[i+1] > arr[i] 
 
 // 所以我们需要先找到这两个数 然后再交换这两个数
+
+// 1 显示中序遍历
 var recoverTree = (root) => {
     let nums = []
     inorder(root,nums)    // 对该树进行中序遍历
@@ -86,4 +88,33 @@ const recover2 = (r, count, x, y) => {
     }
 }
 
+// 可以将遍历的节点值推入一个数组，遍历数组找出错误对。
+// 但其实没必要每个存下来，只用比较前后访问的节点值，上一个访问的节点用一个变量记录，当前访问的是递归遍历的root节点。
+const recoverTree = (root) => {
+    let prevNode = new TreeNode(-Infinity);
+    let firstError;
+    let secondError;
+    var inOrder = function (root) { // 中序遍历：left|root|right，root和prevNode就是两个指针
+      if (root == null) return;
+      inOrder(root.left);
+      if (prevNode.val >= root.val && firstError == null) { // 当前是第一对错误
+        firstError = prevNode;                              // 记录第一个错误点
+      }
+      if (prevNode.val >= root.val && firstError != null) { // 第一个错误点已确定
+        secondError = root;                                 // 记录第二个错误点
+      }
+      prevNode = root;                                      // 更新 prevNode
+      inOrder(root.right);
+    };
+    inOrder(root);
+    const temp = firstError.val;
+    firstError.val = secondError.val;
+    secondError.val = temp; 
+}
+
+
+// 2 隐式中序遍历  用迭代的方法中序遍历二叉树
+
+
+// 3 mirros 中序遍历
 
