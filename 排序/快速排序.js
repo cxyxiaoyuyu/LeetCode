@@ -53,7 +53,7 @@ function handlePivot(arr,start,end){
     if(end - start <= 1) return end - start - 1
 
     // 生成[start,end)之间的随机数 并与第一个数交换位置
-    let random = Math.random()*(end - start) + start
+    let random = Math.floor(Math.random()*(end - start) + start)
     swap(arr[random],arr[0])
     
     let k = start + 1

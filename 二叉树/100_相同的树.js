@@ -25,3 +25,20 @@ var isSameTree = function(p, q) {
         return false
     }
 };
+
+// 2 BFS 遍历 看了大神的代码 自己模拟的
+var isSameTree = function(p, q){
+    let queue = [{p,q}]
+    while(queue.length){
+        let node = queue.shift()
+        if(node.p === null && node.q === null) continue
+        if(node.p === null || node.q === null) return false
+        if(node.p.val === node.q.val){
+            queue.push({p: node.p.left,q: node.q.left})
+            queue.push({p: node.p.right,q: node.q.right})
+        }else{
+            return false
+        }
+    }
+    return true
+}
