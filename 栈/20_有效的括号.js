@@ -56,3 +56,23 @@ var isValid = function(s) {
     }
     return stack.length === 0
 }
+
+// 2020-08-14 复习 自己写的
+var isValid = function(s) {
+    let n = s.length
+    let stack = []
+    let map = {'(': ')','{': '}','[': ']'}
+    for(let i=0;i<n;i++){
+        if(['(','{','['].includes(s[i])){
+            stack.push(s[i])
+        }else{
+            let char = stack.pop()
+            if(map[char] !== s[i]){
+                return false
+            }
+        }
+    }
+    // if(stack.length === 0) return true
+    // else return false
+    return stack.length === 0
+};
