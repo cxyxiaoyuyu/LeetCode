@@ -16,25 +16,26 @@
 
 // 1 dfs 自己写的
 var floodFill = function(image, sr, sc, newColor) {
+    let initValue = image[sr][sc]
+    if(initValue === newColor){   // 看题解时发现的
+        return image
+    }
     let row = image.length     // 行
     let col = image[0].length  // 列
-    let initValue = image[sr][sc]
-    let memo = {}
+    
     const draw = (x,y)=>{
-        if((x<0 || x >=row) || (y<0 || y>=col) 
-            || image[x][y] !== initValue
-            || memo[[x,y]]
-        ){
+        if((x<0 || x >=row) || (y<0 || y>=col) || image[x][y] !== initValue){
             return 
         }
         image[x][y] = newColor
-        memo[[x,y]] = true
         draw(x+1,y)
         draw(x-1,y)
         draw(x,y+1)
         draw(x,y-1)
     }
-
+    
     draw(sr,sc)
     return image
 };
+
+
