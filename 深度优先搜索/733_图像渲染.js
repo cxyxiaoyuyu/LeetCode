@@ -38,4 +38,28 @@ var floodFill = function(image, sr, sc, newColor) {
     return image
 };
 
+// 2 bfs
+var floodFill = function(image, sr, sc, newColor) {
+    let initValue = image[sr][sc]
+    if(initValue === newColor){
+        return image
+    }
 
+    let row = image.length
+    let col = image[0].length
+
+    let deque = [[sr,sc]]
+    image[sr][sc] = newColor
+    while(deque.length){
+        let [x,y] = deque.shift()
+        let array = [[x+1,y],[x-1,y],[x,y+1],[x,y-1]]
+        array.forEach((value)=>{         // 或者 array.forEach(([x,y])=>{})
+            let [r,c] = value
+            if((r>=0 && r< row) && (c>=0 && c < col) && image[r][c] === initValue){
+                image[r][c] = newColor
+                deque.push([r,c])
+            }
+        })
+    }
+    return image
+};
