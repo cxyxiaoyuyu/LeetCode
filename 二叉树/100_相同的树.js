@@ -11,7 +11,7 @@
 
 // 输出: true
 
-// 1 DFS 遍历 自己写的
+// 1 递归 深度优先搜索 自己写的
 var isSameTree = function(p, q) {
     if(p === null && q === null){
         return true
