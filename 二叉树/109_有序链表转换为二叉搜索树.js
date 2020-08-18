@@ -90,3 +90,28 @@ const sortedListToBST = (head) => {
     return root;
 };
   
+// 3 中序遍历策略带来的优化  感觉头发掉完了
+const sortedListToBST = (head) => {
+    if (head == null) return null;
+    let len = 0;
+    let h = head;  // h初始指向头结点
+    while (head) { // 求链表的节点个数
+      len++;
+      head = head.next;
+    }
+  
+    const buildBST = (start, end) => {
+      if (start > end) return null;     // 递归的出口，返回null节点
+      const mid = (start + end) >>> 1;  // 求mid，不是为了构建它，是为了分治
+      const left = buildBST(start, mid - 1);
+      const root = new TreeNode(h.val); // 按 h.val 构建节点
+    
+      h = h.next;          // h指针步进              
+      root.left = left;    // root构建出来了，接上左子树        
+  
+      root.right = buildBST(mid + 1, end); // 构建当前root的右子树
+      return root;
+    };
+  
+    return buildBST(0, len - 1);
+}
