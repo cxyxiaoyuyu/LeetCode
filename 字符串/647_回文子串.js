@@ -12,7 +12,7 @@
 // 输出：6
 // 解释：6个回文子串: "a", "a", "a", "aa", "aa", "aaa"
 
-// 1 遍历 自己写的
+// 1 中心拓展 自己写的
 var countSubstrings = function(s) {
     let n = s.length
     let i = 0
@@ -20,12 +20,12 @@ var countSubstrings = function(s) {
     while(i<n){
         res ++
         let j = i + 1
-        while(j<n && s[i] === s[j]){
+        while(j<n && s[i] === s[j]){   // i 为回文中心起始位置 j为回文中心右起始位置
             res ++
             j ++
         }
         let l = i-1 , r = j
-        while(l>=0 && r<n && s[l] === s[r]){
+        while(l>=0 && r<n && s[l] === s[r]){   // 依次像左右两边扩展
             res ++ 
             l --
             r ++ 
