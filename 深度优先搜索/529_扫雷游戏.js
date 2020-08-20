@@ -63,13 +63,46 @@ const updateBoard = (board, click) => {
 
 // 2 bfs
 const updateBoard = (board,click) => {
+    let [cx,cy] = click
+    if (board[cx][cy] == 'M') { // 第一下就踩雷了
+      board[cx][cy] = 'X';
+      return board
+    } 
+
     const m = board.length
     const n = board[0].length
-    const dx = [1, 1, 1, -1, -1, -1, 0, 0];
-    const dy = [1, 0, -1, 0, 1, -1, 1, -1];
+    const dx = [1, 1, 1, -1, -1, -1, 0, 0]
+    const dy = [1, 0, -1, 0, 1, -1, 1, -1]
     const inBound = (x,y) => x>=0 && x<m && y>=0 && y<n
+    let queue = [[cx,cy]]
 
-    
+    while(queue.length){
+        let [x,y] = queue.shift()
+        let count = 0
+        for(let i=0;i<8;i++){
+            const nx = x + dx[i]
+            const ny = y + dy[i]
+            if(inBound(nx,ny) && board[nx][ny] === 'M'){
+                count ++
+            }
+        }
+        if(count === 0 ){
+            board[x][y] = 'B'
+            for(let i=0;i<8;i++){
+                const nx = x + dx[i]
+                const ny = y + dy[i]
+                if(inBound(nx,ny) && board[nx][ny] === 'E'){
+                    board[nX][nY] = 'B'     // 最重要的一句  放入队列的时候也要标记  否则会重复放入
+                    queue.push([nx,ny])
+                }
+            }
+
+        }else{
+            board[x][y] = count + ''
+        }
+    }
+
+    return board
 }
 
 
