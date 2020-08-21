@@ -26,3 +26,22 @@ var minDepth = function(root) {
 }
 
 // 2 bfs
+var minDepth = function(root) {
+    if(root === null) return 0
+
+    let queue = [root]
+    let height = 0
+    while(queue.length){       
+        let n = queue.length
+        for(let i=0;i<n;i++){
+            let node = queue.shift()
+            if(node.left===null && node.right===null){   // 遇到叶子节点就返回 
+              return height + 1
+            }
+            if(node.left) queue.push(node.left)
+            if(node.right) queue.push(node.right)
+        }
+        height++
+    }
+    return height
+}
