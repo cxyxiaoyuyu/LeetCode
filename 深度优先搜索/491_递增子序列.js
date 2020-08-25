@@ -37,7 +37,33 @@ const findSubsequences = (nums) => {
     return res
 }
 
-
-
-
-
+// 2 不用set去重  目前看不懂的算法
+const findSubsequences = (nums) => {
+    const res = [];
+    const len = nums.length;
+  
+    const dfs = (start, path) => {
+      if (start == len) {        // 指针已经越界
+        if (path.length >= 2) {
+          res.push(path.slice());
+          return;
+        }
+      }
+      path.push(nums[start]); // 选择
+      for (let i = start + 1; i <= len; i++) {
+        const prev = nums[start];
+        const cur = nums[i];
+        if (i < len && cur == prev) { // i还没越界，且当前选择和前一个选择相同
+          dfs(i, path);              
+          break;                      
+        } else if (i == len || prev < cur) { // i已经越界，放它进递归，在递归中return
+          dfs(i, path);                      // 或prev < cur，满足条件，往下递归
+        }
+      }
+      path.pop(); // 撤销选择
+    };
+    for (let i = 0; i < len; i++) {
+      dfs(i, []);
+    }
+    return res;
+  }
