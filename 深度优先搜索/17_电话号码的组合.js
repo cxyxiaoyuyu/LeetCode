@@ -53,3 +53,22 @@ var letterCombinations = function(digits) {
   generate('', 0); // 递归的入口，初始字符串为''，指针为0
   return res;
 }
+
+
+// bfs  
+var letterCombinations = function(digits) {
+    if(digits === '') return [] 
+    let map = {1:'',2:'abc',3:'def',4:'ghi',5:'jkl',6:'mno',7:'pqrs',8:'tuv',9:'wxyz'}
+    let queue = ['']
+    for(let i=0;i<digits.length;i++){
+        let size = queue.length
+        for(let j=0;j<size;j++){
+            let curStr = queue.shift() 
+            let letters = map[digits[i]]
+            for(let l of letters){
+                queue.push(curStr+l)
+            }
+        }
+    }
+    return queue
+}
