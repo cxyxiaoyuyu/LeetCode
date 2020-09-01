@@ -24,3 +24,21 @@ function PredictTheWinner(nums){
   }
   return helper(0,n-1) >=0
 }
+
+// 2 记忆化递归
+function PredictTheWinner(nums){
+  let n = nums.length
+  let memo = Array.from(Array(n),()=>Array(n))
+  const helper = (i,j) => {
+      if(memo[i][j]) return memo[i][j]
+      if(i===j){ return nums[i] }
+      if(i+1 === j) return Math.abs(nums[i] - nums[j])
+
+      let pickI = nums[i] - helper(i+1,j)
+      let pickJ = nums[j] - helper(i,j-1)
+
+      memo[i][j] = Math.max(pickI,pickJ)
+      return memo[i][j]
+  }
+  return helper(0,n-1) >=0
+}
