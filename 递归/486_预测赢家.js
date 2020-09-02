@@ -42,3 +42,32 @@ function PredictTheWinner(nums){
   }
   return helper(0,n-1) >=0
 }
+
+// 3 动态规划
+// 状态转移方程 dp[i][j] = Math.max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j - 1]);
+// 注意依赖 决定状态转移方向
+function PredictTheWinner(nums){
+  let n = nums.length
+  let dp = Array.from(Array(n),()=>Array(n).fill(0))
+  for(let i=0;i<n;i++){
+    dp[i][i] = nums[i]
+  }
+
+  for(let j=1;j<n;j++){
+    for(let i=j-1;i>=0;i--){
+      let pickI = nums[i] - dp[i+1][j]
+      let pickJ = nums[j] - dp[i][j-1]
+      dp[i][j] = Math.max(pickI,pickJ)
+    }
+  }
+
+  // 方向也可以时这样
+  // for (let i = len - 2; i >= 0; i--) { 
+  //   for (let j = i + 1; j < len; j++) {
+  //     const pickI = nums[i] - dp[i + 1][j];
+  //     const pickJ = nums[j] - dp[i][j - 1];
+  //     dp[i][j] = Math.max(pickI, pickJ);
+  //   }
+  // }
+  return dp[0][n-1] >= 0 
+}
