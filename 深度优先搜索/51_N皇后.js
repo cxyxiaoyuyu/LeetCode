@@ -127,3 +127,43 @@ var solveNQueens = function (n) {
   dfs(array, 0)
   return res
 }
+
+// 再一次优化 因为每次都要调用hasQueue这个函数去判断  
+// 可以用三个Set 分别记录已有N皇后的列 正对角线集  反对角线集
+// 右下斜对角线上的坐标 行 列下标之差是相同的
+// 左下斜对角线上的坐标 行 列下标之和是相同的
+const solveNQueens = (n) => {
+  const board = Array.from(Array(n),()=>Array(n).fill('.'))
+
+  const cols = new Set()  // 列集，记录出现过皇后的列
+  const diag1 = new Set() // 正对角线集  左下
+  const diag2 = new Set() // 反对角线集  右下
+
+  const res = []
+
+  const helper = (row) => {
+    if(row >= n){
+      res.push( board.map( row => { return row.join('') }))
+      return
+    }
+
+    for(let col=0;col<n;col++){
+      if(!cols.has(col) && !diag1.has(row+col) && !diag2.has(row-col)){
+        board[row][col] = 'Q'
+
+        cols.add(col)
+        diag1.add(row+col)
+        diag2.add(row-col)
+
+        helper(row+1)
+        board[row][col] = '.'
+        cols.delete(col)
+        diag1.delete(row+col)
+        diag2.delete(row-col)
+      }
+    }
+  }
+
+  helper(0)
+  return res
+}
