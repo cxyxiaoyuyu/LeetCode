@@ -21,12 +21,11 @@ var letterCombinations = function(digits) {
             return 
         }
 
-        for(let i=start;i<len;i++){
-            for(let j=0;j<map[digits[i]].length;j++){
-                path.push(map[digits[i]][j])
-                dfs(i+1,path)
-                path.pop()
-            }
+        let letters = map[digits[start]]
+        for(let j=0;j<letters.length;j++){
+            path.push(letters[j])
+            dfs(start+1,path)
+            path.pop()
         }
     }
 
