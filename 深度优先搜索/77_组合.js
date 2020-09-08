@@ -50,3 +50,33 @@ const combine = (n, k) => {
   helper(n, k, []);
   return res;
 };
+
+// 3 动态规划
+combine = (n,k)=>{
+  let dp = Array.from(Array(n+1),()=>Array(k+1).fill(null))
+  dp[1][1] = [[1]]
+  for(let i=2;i<n+1;i++){
+      for(let j=1;j<k+1;j++){
+          let left = dp[i-1][j-1]     // 包含i的
+          let right = dp[i-1][j]      // 不包含i的
+          
+          if(left === null){
+              if(j === 1){
+                  left = [[i]]
+              }
+          }else{
+              left = left.map(arr=> { 
+                  let temp = arr.slice()
+                  temp.push(i)
+                  return temp
+              })
+          }
+          if(left === null && right === null){
+              dp[i][j] = null
+          }else{
+              dp[i][j] = right ? left.slice().concat(right): left.slice()
+          }
+      }
+  }
+  return dp[n][k]
+}
