@@ -22,6 +22,7 @@
 //   [3,5]
 // ]
 
+// 1 dfs
 var combinationSum = function(candidates, target) {
   let res = []
   let n = candidates.length
@@ -49,4 +50,30 @@ function sum(arr){
     return arr.reduce((pre,cur)=>{
         return pre+cur   
     },0)
+}
+
+// 优化代码  sum作为参数传进去
+var combinationSum = function(candidates, target) {
+  let res = []
+  let n = candidates.length
+  const dfs = (path,index,sum) => {
+     if(sum === target){
+         res.push(path.slice())
+         return
+     }else if(sum > target){
+         return
+     }
+
+     for(let i=index;i<n;i++){
+        path.push(candidates[i])
+        sum += candidates[i]
+        dfs(path,i,sum)
+        path.pop() 
+        sum -= candidates[i]
+     }
+  }
+
+  dfs([],0,0)
+
+  return res
 }
