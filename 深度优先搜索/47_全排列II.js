@@ -42,4 +42,34 @@ var permuteUnique = function(nums) {
 
     dfs([])
     return res
+}
+
+// 2 回溯 剪枝 如果前一个在使用的话 就继续  如果前一个没在使用 说明前一个已经搜索过了，就跳过
+var permuteUnique = function(nums) {
+    let res = []
+    let used = {}
+    let len = nums.length
+
+    nums.sort((a,b) => a-b)   // 升序排序
+
+    const dfs = path => {
+        if(path.length === len){
+            res.push(path.slice())
+            return            
+        }
+        for(let i=0;i<len;i++){
+            if(!used[i]){
+                if(i > 0 && nums[i] === nums[i-1] && !used[i-1]){   // 在这里剪枝
+                    continue
+                }
+                path.push(nums[i])
+                used[i] = true
+                dfs(path)
+                path.pop()
+                used[i] = false
+            }
+        }
+    }
+    dfs([])
+    return res
 };
