@@ -86,7 +86,9 @@ var combinationSum2 = function(candidates, target) {
       }
 
       for(let i=start;i<n;i++){
+          // 这里的剪枝条件也可以换为 i !== start  再画图思考一遍吧 挺绕的
           if(candidates[i] === candidates[i-1] && i-1 >= start){   // 说明第i-1个已经遍历过
+
               continue 
           }
           path.push(candidates[i])
