@@ -37,3 +37,30 @@ var combinationSum4 = function(nums, target) {
   dfs([],0)
   return res
 };
+
+// 2 动态规划 
+var combinationSum4 = function(nums, target) {
+  let dp = new Array(target+1).fill(0)
+  dp[0] = 1
+
+  for(let i=0;i<=target;i++){
+      for(let num of nums){
+          if(i>=num){
+              dp[i] += dp[i-num]
+          }
+      }
+  }
+  console.log(dp)
+  return dp[target]
+};
+
+// [2,3,5] 8
+// dp[8] = (2)dp[8-2] + (3)dp[8-3] + (5)dp[8-5]  => 2 + 3 + 1 = 6
+// dp[7] = (2)dp[7-2] + (3)dp[7-3] + (5)dp[7-5]  => 3 + 1 + 1 = 5
+// dp[6] = (2)dp[4] + (3)dp[3] + (5)dp[1]        => 1 + 1 + 0 = 2
+// dp[5] = (2)dp[5-2] + (3)dp[2] + (5)dp[0]      => 1 + 1 + 1 => 3
+// dp[4] = (2)dp[2] + (3)dp[1] + (5)xxx  => 1
+// dp[3] = (2)dp[1] + (3)dp[0] + (5)xxx  => 1
+// dp[2] = (2)dp[0]   => 1
+// dp[1] = 0
+// dp[0] = 1
