@@ -67,3 +67,48 @@ var topKFrequent = function(nums, k) {
   }
   return arr.slice(0,k)
 }
+
+// 堆排序 2 
+var topKFrequent = function(nums, k) {
+  let map = {}
+  for(let i=0;i<nums.length;i++){
+    map[nums[i]] = map[nums[i]] || 0
+    map[nums[i]] ++
+  } 
+
+  let i = 0
+  let heap = []
+  for(let key in map){
+    if(i<k){
+        heap.push(key)
+        siftUp(heap,i)   // 一个一个堆化
+    }else if(map[key] > map[heap[0]]){
+        heap[0] = key 
+        siftDown(0)
+    }
+    i++
+  }
+
+  function siftUp(heap, i){
+    if(i===0){return}
+    const parent = parseInt((i-1)/2)
+    if(map[heap[i]] < map[heap[parent]]){
+        [heap[i],heap[parent]]=[heap[parent],heap[i]]
+        siftUp(heap, parent)
+    }
+  }
+
+  function siftDown(i){
+    const left = 2*i + 1, right = 2*i + 2
+    let greater = left
+    if(greater >= k) return      // 如果左节点超过k了
+    if(right < k && map[heap[right]] < map[heap[greater]]){
+      greater = right
+    }
+    if(map[heap[greater]] < map[heap[i]]){
+      [heap[greater],heap[i]] = [heap[i],heap[greater]]
+      siftDown(greater)
+    }
+  }
+  return heap
+}
