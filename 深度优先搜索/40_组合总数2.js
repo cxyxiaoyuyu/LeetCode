@@ -24,13 +24,21 @@
 //   [5]
 // ]
 
-// 排序 回溯剪枝
+// 1 dfs 
+// 用used 哈希表判断前一个是否在使用 
+// 如果在使用的话 不会重复
+// 如果第i-1个没在使用 说明第i-1个已经遍历结束 跳过第i个
+/**
+ * @param {number[]} candidates
+ * @param {number} target
+ * @return {number[][]}
+ */
 var combinationSum2 = function(candidates, target) {
   let sum = 0
   let n = candidates.length
   let res = []
   let used = {}
-  // 排序
+  
   candidates.sort((a,b)=>a-b)  // 升序排序
 
   const dfs = (path,start) => {
@@ -57,3 +65,37 @@ var combinationSum2 = function(candidates, target) {
   dfs([],0)
   return res
 }
+
+
+// 2 优化代码
+// 1) 默认就是升序排序
+// 2) sum的优化
+// 3) 剪枝条件的优化 如果第i个与第i-1的值相同的话 并且第i-1个是 大于等于 start 的 说明第i-1 个已经遍历过 所以跳过第i个
+var combinationSum2 = function(candidates, target) {
+  let res = []
+  candidates.sort()
+  let n = candidates.length
+
+  const dfs = (path,start,sum)=>{
+      if(sum >= target){
+          if(sum === target){
+              res.push(path.slice())
+          }
+          return
+      }
+
+      for(let i=start;i<n;i++){
+          // 这里的剪枝条件也可以换为 i !== start  再画图思考一遍吧 挺绕的
+          if(candidates[i] === candidates[i-1] && i-1 >= start){   // 说明第i-1个已经遍历过
+
+              continue 
+          }
+          path.push(candidates[i])
+          dfs(path,i+1,sum+candidates[i])
+          path.pop()
+      }
+  }
+
+  dfs([],0,0)
+  return res
+};
