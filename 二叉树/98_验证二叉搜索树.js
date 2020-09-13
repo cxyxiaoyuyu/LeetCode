@@ -34,5 +34,21 @@ var isValidBST = function(root) {
   return isValid(root,-Infinity,Infinity)
 }
 
+// 2 中序遍历 二叉搜索树的中序遍历一定是升序的
+// dfs 中序遍历
+var isValidBST = function(root) {
+  let prev = -Infinity
+  const dfs = (root) => {
+    if(root === null) return true
+    if(!dfs(root.left)) return false
+    if(root.val <= prev){
+        return false
+    }else{
+        prev = root.val
+    }
+    return dfs(root.right)
+  }
+  return dfs(root)
+}
 
 
