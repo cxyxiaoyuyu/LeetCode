@@ -23,9 +23,7 @@ var connect = function(root) {
       let length = queue.length
       for(let i=0;i<length;i++){
           const node = queue.shift()
-          if(i === length - 1){
-              node.next = null
-          }else{
+          if(i !== length - 1){
               node.next = queue[0]
           }
 
@@ -38,4 +36,45 @@ var connect = function(root) {
       }
   }
   return root
+}
+
+
+// 2 优化代码 常数空间  利用上一层的链表遍历
+let last = null
+let nextStart = null
+
+var connect = function(root){
+  if(root === null) return root
+
+  let start = root
+
+  while(start != null){
+    last = null
+    nextStart = null
+
+    for(let p=start;p!==null;p=p.next){
+      if(p.left !== null){
+        handle(p.left)
+      }
+      if(p.right !== null){
+        handle(p.right)
+      }
+    }
+
+    start = nextStart
+  }
+
+  return root
+}
+
+function handle(p){
+  if(last !== null){
+    last.next = p
+  }
+
+  if(nextStart === null){
+    nextStart = p
+  }
+
+  last = p
 }
