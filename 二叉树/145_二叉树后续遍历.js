@@ -29,3 +29,23 @@ var postorderTraversal = function(root) {
 };
 
 // 2 迭代遍历
+var postorderTraversal = function(root) {
+  let res = []
+  let stack = []
+
+  if(root) stack.push(root)
+  while(stack.length){
+    let node = stack.pop()
+
+    if(node){
+      stack.push(node)
+      stack.push(null)
+      node.right && stack.push(node.right)
+      node.left && stack.push(node.left)
+    }else{
+      res.push(stack.pop().val)
+    }
+  }
+
+  return res
+}
