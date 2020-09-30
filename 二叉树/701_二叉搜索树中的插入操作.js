@@ -72,3 +72,27 @@ var insertIntoBST = function(root, val) {
 
   return root
 };
+
+// 3 迭代
+var insertIntoBST = function(root,val) {
+  const node = new TreeNode(val)
+  if(root === null) return node
+
+  let cur = root
+  while(true){
+    if(cur.val > val){
+      if(cur.left === null){
+        cur.left = node
+        break
+      }
+      cur = cur.left
+    }else{
+      if(cur.right === null){
+        cur.right = node
+        break
+      }
+      cur = cur.right
+    }
+  }
+  return root
+}
