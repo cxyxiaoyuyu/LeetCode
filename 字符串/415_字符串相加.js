@@ -52,3 +52,17 @@ var addStrings = function(num1, num2) {
     }
     return ans
 };
+
+// 复习 再写一遍
+var addStrings = function(num1, num2) {
+    let i = num1.length - 1,j = num2.length - 1, add = 0
+    let ans = ''
+    while(i>=0 || j>=0 || add){
+        let sum = (i>=0 ? +num1[i]: 0) + (j>=0? +num2[j]:0 ) + add
+        add = Math.floor(sum / 10)
+        ans = sum % 10 + ans
+        i--
+        j--
+    }
+    return ans
+};
