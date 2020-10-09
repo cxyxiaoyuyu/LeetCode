@@ -35,3 +35,17 @@ var hasCycle = function(head) {
       }
   }
 };
+
+// 2 哈希表
+var hasCycle = (head) => {
+  let map = new Set()
+  let p = head
+  while(p){
+      if(map.has(p)){
+          return true
+      }
+      map.add(p)
+      p = p.next
+  }
+  return false
+}
