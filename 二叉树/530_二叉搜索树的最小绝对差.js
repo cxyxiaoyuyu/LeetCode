@@ -36,3 +36,22 @@ var getMinimumDifference = function(root){
 
   return ans
 }
+
+// python 代码  nonlocal 和 global的区别
+// nonlocal 是外层变量
+// global 是全局变量
+// class Solution:
+//     def getMinimumDifference(self, root: TreeNode) -> int:
+//         prev = -1
+//         ans = float('inf')  # 最大值 正无穷
+//         def inorder(root):
+//             nonlocal prev,ans
+//             if root == None:
+//                 return
+//             inorder(root.left)
+//             if prev != -1:
+//                 ans = min(ans,root.val - prev)
+//             prev = root.val
+//             inorder(root.right)
+//         inorder(root)
+//         return ans 
