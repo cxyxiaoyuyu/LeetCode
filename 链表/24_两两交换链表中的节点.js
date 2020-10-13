@@ -31,3 +31,21 @@ var swapPairs = function(head) {
 };
 
 // 2 直接在原链表交换
+// 设置虚拟头结点 dummy，使得 dummy.next 始终指向第一个结点。
+const swapPairs = (head) => {
+  const dummy = new ListNode()
+  dummy.next = head
+  let prev = dummy
+  while(head && head.next){
+    const next = head.next
+    
+    head.next = next.next
+    next.next = head
+    prev.next = next
+
+    prev = head
+    head = head.next
+  }
+
+  return dummy.next
+}
