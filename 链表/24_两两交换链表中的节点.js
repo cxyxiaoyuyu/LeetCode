@@ -49,3 +49,16 @@ const swapPairs = (head) => {
 
   return dummy.next
 }
+
+// 3 递归
+var swapPairs = function(head) {
+  if(head === null || head.next === null){
+    return head
+  }
+
+  const newHead = head.next
+  head.next = swapPairs(newHead.next)
+  newHead.next = head
+
+  return newHead
+}
