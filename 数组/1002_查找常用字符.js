@@ -47,3 +47,18 @@ function count(str,key){
   }
   return count
 }
+
+// python 代码
+// def commonChars(self, A: List[str]) -> List[str]:
+//   if not A:
+//       return A
+  
+//   # 以第一个作为基准
+//   keys = set(A[0])
+//   res = []
+
+//   for key in keys:
+//       m = min(a.count(key) for a in A)
+//       res.extend([key]*m)
+
+//   return res
