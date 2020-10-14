@@ -14,29 +14,23 @@
 // 我们可以不考虑输出结果的顺序。
 
 // 哈希表计数
-var intersect = function(nums1, nums2) {
-    let n1 = nums1
-    let n2 = nums2
-    if(n1 > n2){
-        [nums1,nums2] = [nums2,nums1]
-    }
-    let map = {}
-    let res = []
+const intersect = function(nums1,nums2){
+    const map = {}
+    const res = []
     for(let num of nums1){
-        if(num in map){
-            map[num] ++
-        }else{
-            map[num] = 1
-        }
+        map[num] = map[num] || 0
+        map[num]++
     }
     for(let num of nums2){
         if(map[num] > 0){
             res.push(num)
-            map[num] --
+            map[num]--
         }
     }
     return res
 }
+
+
 
 // 排序
 var intersect = function(nums1, nums2) {
