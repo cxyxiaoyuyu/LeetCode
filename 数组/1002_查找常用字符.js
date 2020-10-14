@@ -23,3 +23,27 @@ var commonChars = function(A){
   return ans
 }
 
+// 2 封装求数量的方法  根据python得到
+var commonChars = function(A) {
+  const keys = new Set(A[0]) // 以第一个作为基准
+  let ans = ''
+
+  for(let key of keys){
+      let minCount = Infinity
+      for(let str of A){
+          minCount = Math.min(minCount,count(str,key))
+      }
+      ans += key.repeat(minCount)
+  }
+  return ans.split('')
+};
+
+function count(str,key){
+  let count = 0
+  for(let s of str){
+      if(s === key){
+          count ++
+      }
+  }
+  return count
+}
