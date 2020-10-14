@@ -61,4 +61,4 @@ function count(str,key){
 //       m = min(a.count(key) for a in A)
 //       res.extend([key]*m)
 
-//   return res
+//   return re
