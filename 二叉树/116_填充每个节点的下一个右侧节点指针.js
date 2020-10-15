@@ -46,3 +46,27 @@ var connect = function(root){
     }
     return root
 }
+
+// 3 常数空间 一层循环 两个指针
+var connect = function(root){
+    if(root === null) return root
+
+    let leftMost = root
+    let head = leftMost
+
+    while(head){    
+        if(leftMost.left === null) break  // 每次只判断最左边节点是否有下一层
+
+        // 指导下一层的next指向
+        head.left.next = head.right   
+
+        if(head.next){
+            head.right.next = head.next.left
+            head = head.next
+        }else{
+            leftMost = leftMost.left
+            head = leftMost
+        }
+    }
+    return root
+}
