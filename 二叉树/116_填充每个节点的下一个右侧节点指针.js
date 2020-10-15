@@ -26,3 +26,23 @@ var connect = function(root) {
   }
   return root
 };
+
+// 2 优化空间 O(1) 利用上一层链表遍历下一层
+var connect = function(root){
+    if(root === null) return root
+    let leftMost = root
+
+    while(leftMost.left){   // 到叶子节点结束
+        let head = leftMost 
+
+        while(head){       // 指导下一层的next指向
+            head.left.next = head.right
+            head.next && (head.right.next = head.next.left)
+
+            head = head.next
+        }
+
+        leftMost = leftMost.left
+    }
+    return root
+}
