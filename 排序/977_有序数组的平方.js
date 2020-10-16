@@ -28,3 +28,24 @@ var sortedSquares = function(A) {
   return A
 };
 
+// 3 双指针 比较两边
+var sortedSquares = function(A) {
+  let left = 0, right = A.length - 1
+  const res = []
+
+  while(left <= right){
+      leftVal = A[left]**2
+      rightVal = A[right]**2
+
+      if(leftVal > rightVal){
+          res.unshift(leftVal)
+          left ++
+      }else{
+          res.unshift(rightVal)
+          right --
+      }
+  }
+  return res
+};
+
+
