@@ -31,3 +31,41 @@ var isPalindrome = function(head) {
   }
   return true
 };
+
+// 2 空间复杂度优化到O(1) 快慢指针找中点
+const isPalindrome = (head) => {
+  if(head === null || head.next === null) return true
+
+  // 1 快慢指针找中点
+  let fast = head
+  let slow = head
+  let prev
+  while(fast && fast.next){
+    prev = slow
+    slow = slow.next
+    fast = fast.next.next
+  }
+
+  // 2 分成两个链表
+  prev.next = null
+
+  // 3 翻转后半段链表
+  let head2 = null
+  while(slow){
+    const tmp = slow.next
+    slow.next = head2
+    head2 = slow
+    slow = tmp
+  }
+
+  // 4 比较两个链表
+  while(head && head2){
+    if(head.val !== head2.val){
+      return false
+    }
+    head = head.next
+    head2 = head2.next
+  }
+  return true
+}
+
