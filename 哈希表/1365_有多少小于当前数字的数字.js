@@ -33,3 +33,30 @@ var smallerNumbersThanCurrent = function(nums) {
   }
   return res
 }
+
+// 2 排序
+var smallerNumbersThanCurrent = function(nums) {
+  const n = nums.length
+  const data = Array.from(Array(n),()=>Array(2).fill(0))
+  for(let i=0;i<n;i++){
+    data[i][0] = nums[i]
+    data[i][1] = i
+  }
+
+  data.sort((a,b)=> a[0] - b[0])
+
+  console.log(data)
+
+  const res = []
+  let prev 
+  for(let i=0;i<n;i++){
+    if(i === 0 || data[i][0] !== data[i-1][0]){   // 第一个
+      res[data[i][1]] = i
+      prev = i
+    }else{
+      res[data[i][1]] = prev
+    }
+  }
+
+  return res
+}
