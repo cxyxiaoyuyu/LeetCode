@@ -122,3 +122,27 @@ console.log(serialize(binaryTree))
 
 
 // 中根序遍历顺序存储的二叉树
+var sumNumbers = function(root) {
+  if(root === null) return 0
+  let ans = 0
+  const queue = [[root,root.val]]
+  while(queue.length){
+      let n = queue.length
+      for(let i=0;i<n;i++){
+          const [node,val] = queue.shift()
+
+          if(node.left){
+              queue.push([node.left,val*10+node.left.val])
+          }
+
+          if(node.right){
+              queue.push([node.right,val*10+node.right.val])
+          }
+
+          if(node.left === null && node.right === null){
+              ans += val
+          }
+      }
+  }
+  return ans
+};
